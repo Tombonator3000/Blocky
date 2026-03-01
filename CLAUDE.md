@@ -21,7 +21,7 @@ Se MEMORY.md for full arkitekturoversikt.
 - Aldri endre eksisterende arbeidslogikk uten å forstå den først
 
 ### Branch-regler
-- Utviklingsgren: `claude/review-context-files-2l1ob`
+- Utviklingsgren: `claude/review-project-docs-Xstzk`
 - Push alltid med: `git push -u origin <branch-name>`
 - Branch må starte med `claude/` og slutte med session ID
 
@@ -33,6 +33,11 @@ Se MEMORY.md for full arkitekturoversikt.
 **Problem:** MEMORY.md, log.md, todo.md, bugs.md, MULTIPLAYER.md og CLAUDE.md eksisterte ikke.
 **Løsning:** Opprettet alle disse filene med initial innhold ved prosjektstart.
 **Leksjon:** Alltid opprett context-filer i starten av en ny prosjektsesjon.
+
+### [2026-03-01] Hvit skjerm på GitHub Pages - GoogleGenAI top-level init
+**Problem:** Spillet viste hvit skjerm fra GitHub Pages. `GoogleGenAI({ apiKey: undefined })` kaster feil og krasjer hele import-kjeden.
+**Løsning:** Flytt `GoogleGenAI`-instansiering inn i funksjonen (ikke toppnivå). Sjekk at `apiKey` er satt før bruk.
+**Leksjon:** ALDRI initialiser tredjepartstjenester (API-klienter, DB, etc.) på modulnivå uten null-sjekk. Bruk lazy init eller factory pattern.
 
 ---
 
@@ -48,6 +53,8 @@ Se MEMORY.md for full arkitekturoversikt.
 - I GitHub Actions: bruk `secrets.GEMINI_API_KEY`
 - Lokalt: bruk `.env.local` (ignorert av git)
 - Spillet **fungerer uten nøkkel** - bare teksturgenerering deaktiveres
+- `vite.config.ts` bruker `JSON.stringify(env.GEMINI_API_KEY || '')` for å unngå `undefined` i bundle
+- **KRITISK:** Aldri instansier `GoogleGenAI` på toppnivå - gjør det inne i funksjoner med null-sjekk!
 
 ### TypeScript
 - `tsconfig.json` bruker `"allowImportingTsExtensions": true` - dette krever `"noEmit": true`
