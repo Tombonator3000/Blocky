@@ -1,0 +1,5 @@
+{
+  "name": "GeminiCraft",
+  "description": "A Minecraft-like voxel game using Gemini to generate custom block textures.",
+  "requestFramePermissions": []
+}
