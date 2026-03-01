@@ -21,6 +21,7 @@
 - [x] Konfigurer Vite base URL for relative paths
 - [x] Oppdater README med deployment-instruksjoner
 - [x] Opprett context-filer (MEMORY, log, todo, bugs, MULTIPLAYER, CLAUDE)
+- [x] Fikse hvit skjerm (GoogleGenAI top-level init, ErrorBoundary, CSS base-stiler)
 
 ---
 
@@ -35,7 +36,7 @@
 
 ### Teknisk gjeld
 - [ ] Fjern ubrukte avhengigheter: `express`, `better-sqlite3`, `dotenv`
-- [ ] Legg til error boundary rundt 3D canvas
+- [x] Legg til error boundary rundt 3D canvas
 - [ ] Optimaliser blokkrendering med instancing (InstancedMesh)
 
 ### Multiplayer (se MULTIPLAYER.md)

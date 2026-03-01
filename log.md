@@ -29,3 +29,24 @@
 - Bruker `npm ci` (ikke `npm install`) for reproducerbare builds i CI
 
 **Branch:** `claude/review-context-files-2l1ob`
+
+---
+
+### [2026-03-01 01:00] Fiks hvit skjerm på GitHub Pages
+**Problem:** Spillet viste hvit skjerm fra GitHub Pages.
+
+**Rotårsak:** `GoogleGenAI` ble initialisert på toppnivå i `gemini.ts`:
+```typescript
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+```
+Uten `GEMINI_API_KEY`-secret i GitHub kaster konstruktøren feilen:
+`"API key must be set when using the Gemini API."`
+Dette krasjet importkjeden: `App.tsx → Game.tsx → TextureGenerator.tsx → gemini.ts`, og React app-en klarte ikke å mounte. Resultat: hvit skjerm.
+
+**Endringer:**
+1. **`src/services/gemini.ts`** - Flyttet `GoogleGenAI`-instansiering inn i `generateBlockTexture`-funksjonen. Lagt til guard for manglende API-nøkkel.
+2. **`src/App.tsx`** - Lagt til `ErrorBoundary` klasse-komponent som fanger render-feil og viser feilmelding istedenfor hvit skjerm.
+3. **`src/index.css`** - Lagt til `html, body, #root { height: 100%; overflow: hidden; }` for korrekt full-skjerm layout.
+4. **`vite.config.ts`** - `JSON.stringify(env.GEMINI_API_KEY || '')` for å sikre tom streng som fallback.
+
+**Branch:** `claude/review-project-docs-Xstzk`

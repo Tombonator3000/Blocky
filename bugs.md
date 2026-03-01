@@ -31,7 +31,10 @@
 
 ## Fikset bugs
 
-*(ingen ennå)*
+### ✅ BUG-004: Hvit skjerm på GitHub Pages (kritisk)
+**Beskrivelse:** Spillet viste hvit skjerm ved GitHub Pages-deployment.
+**Årsak:** `GoogleGenAI`-konstruktøren kaster feil ved manglende API-nøkkel, og ble kalt på toppnivå i `gemini.ts`, noe som krasjet hele modulimport-kjeden.
+**Fix:** Flyttet instansiering inn i funksjonen, lagt til guard for manglende nøkkel. Lagt til `ErrorBoundary` i `App.tsx` for fremtidige feil.
 
 ---
 
